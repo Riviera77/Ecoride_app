@@ -1,0 +1,110 @@
+networks:
+  Ecoride_network:
+    driver: bridge
+
+services:
+
+  php:
+    container_name: ecoride_php
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/var/www/html/
+    depends_on:
+      database:
+        condition: service_healthy
+      mongo:
+        condition: service_healthy
+    networks:
+      - Ecoride_network
+  
+  web:
+    image: nginx:alpine
+    container_name: ecoride_nginx
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - .:/var/www/html
+    ports:
+      - 8081:80
+    depends_on:
+      - php
+    networks:
+      - Ecoride_network
+
+###> doctrine/doctrine-bundle ###
+  database:
+    image: postgres:${POSTGRES_VERSION:-16}-alpine
+    container_name: ecoride_database
+    env_file:
+      - .env.local
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "${POSTGRES_DB:-app}", "-U", "${POSTGRES_USER:-app}"]
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    volumes:
+      - database_data:/var/lib/postgresql/data:rw
+      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/db/data:/var/lib/postgresql/data:rw
+###< doctrine/doctrine-bundle ###
+
+  adminer:
+    image: adminer
+    restart: always
+    environment:
+      ADMINER_DEFAULT_SERVER: database
+    ports:
+      - 8082:8080
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - Ecoride_network
+
+  mongo:
+    image: mongo:7.0.17-jammy
+    container_name: ecoride_mongo
+    restart: always
+    env_file:
+      - .env.local
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - Ecoride_network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh mongo:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mongo-express:
+    image: mongo-express
+    container_name: ecoride_mongo_express_ui
+    restart: always
+    env_file:
+      - .env.local
+    ports:
+      - 8083:8080
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ROOT_USER}
+      ME_CONFIG_MONGODB_ADMINPASSWORD:  ${MONGO_ROOT_PASSWORD}
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_ROOT_USER}:${MONGO_ROOT_PASSWORD}@mongo:27017/
+    networks:
+      - Ecoride_network
+
+volumes:
+###> doctrine/doctrine-bundle ###
+  database_data:
+  mongo_data:
+###< doctrine/doctrine-bundle ###

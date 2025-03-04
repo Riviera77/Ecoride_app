@@ -1,0 +1,46 @@
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+# Ignorer les fichiers d'environnement
+.env
+.env.local
+.env.dev
+
+# Ignorer les dépendances et les builds
+node_modules/
+vendor/
+var/
+var/cache/
+var/logs/
+var/sessions/
+public/build/
+public/uploads/
+
+# Ignorer Docker
+.dockerignore
+docker-compose.override.yml
+
+# Ignorer les fichiers d'IDE/Éditeurs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignorer les logs et fichiers temporaires
+npm-debug.log
+yarn-error.log
+*.lock
+
+# Ignorer le cache de Composer et Symfony
+composer.lock
+symfony.lock
+
+
