@@ -1,0 +1,10 @@
+:root {
+    --bs-primary: #3ABABA;
+    /* Exemple : Rouge orangé */
+    --bs-secondary: #B5D6CA;
+    /* Exemple : Vert fluo */
+}
+
+body {
+    background-color: #dae2ea;
+}
