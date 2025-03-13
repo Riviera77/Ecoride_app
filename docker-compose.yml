@@ -55,19 +55,6 @@ services:
       # - ./docker/db/data:/var/lib/postgresql/data:rw
 ###< doctrine/doctrine-bundle ###
 
-  adminer:
-    image: adminer
-    restart: always
-    environment:
-      ADMINER_DEFAULT_SERVER: database
-    ports:
-      - 8082:8080
-    depends_on:
-      database:
-        condition: service_healthy
-    networks:
-      - Ecoride_network
-
   mongo:
     image: mongo:7.0.17-jammy
     container_name: ecoride_mongo
