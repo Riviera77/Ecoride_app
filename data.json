@@ -1,0 +1,8 @@
+{
+    "id_utilisateur": "UUID",
+    "id_trajet": "UUID",
+    "note": 4.8,
+    "commentaire": "Chauffeur très sympathique et ponctuel",
+    "date": "2025-02-05T10:30:00Z",
+    "status": "validé"
+}

@@ -22,9 +22,9 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          POSTGRES_DB: symfony_test
-          POSTGRES_USER: user
-          POSTGRES_PASSWORD: password
+          POSTGRES_DB: postgresdb
+          POSTGRES_USER: grEy77
+          POSTGRES_PASSWORD: grEy77
         ports:
           - 5432:5432
 

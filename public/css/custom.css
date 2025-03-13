@@ -1,27 +1,23 @@
 :root {
-    --primary: #f64d45;
-    --secondary: #c1261f;
+    --primary: #cccdadef;
+    --secondary: #537978;
     --success: #28a745;
     --danger: #dc3545;
     --warning: #fd7e14;
     --info: #17a2b8;
-    --light: #f8f9fa;
+    --light: #cccdadef;
     --dark: #343a40;
     --bs-nav-link-color: var(--primary);
     --bs-link-color: var(--primary);
     --bs-link-hover-color: var(--secondary);
 }
 
-body {
-    background-color: #dae2ea;
-}
-
 .btn-primary {
-    --bs-btn-color: #fff;
+    --bs-btn-color: #cccdadef;
     --bs-btn-bg: var(--primary);
     --bs-btn-border-color: var(--primary);
     --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: #f64d45;
+    --bs-btn-hover-bg: #094517;
     --bs-btn-hover-border-color: var(--secondary);
     --bs-btn-focus-shadow-rgb: 49, 132, 253;
     --bs-btn-active-color: #fff;
@@ -38,7 +34,7 @@ body {
     --bs-btn-bg: var(--secondary);
     --bs-btn-border-color: var(--secondary);
     --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: #f64d45;
+    --bs-btn-hover-bg: #348183;
     --bs-btn-hover-border-color: var(--secondary);
     --bs-btn-focus-shadow-rgb: 49, 132, 253;
     --bs-btn-active-color: #fff;
@@ -73,6 +69,40 @@ body {
     --bs-nav-pills-link-active-bg: var(--primary);
 }
 
+body {
+    position: relative;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url(../img/Fond-ecran.png);
+        background-size: cover;
+        filter: brightness(0.3);
+    }
+
+    * {
+        /*Positionner les éléments devant le: :before */
+        position: relative;
+    }
+}
+
+.hero-scene-content {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+}
+
 .card-title {
     color: var(--primary);
 }
@@ -83,16 +113,23 @@ h3 {
     font-family: "Space Mono", monospace;
 }
 
-h1 {
+h1,
+h3,
+p,
+a {
+    color: var(--primary);
+}
+
+p,
+ul,
+li,
+a {
+    font-size: 1.2rem;
     color: var(--primary);
 }
 
 h2 {
     color: var(--secondary);
-}
-
-h3 {
-    color: var(--primary);
 }
 
 .card-img-top {
