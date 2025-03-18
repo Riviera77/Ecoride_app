@@ -1,31 +1,31 @@
 <header>
     <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/"><img class="logo" src="../img/Logo.png" alt="Logo"></a>
+            <a class="navbar-brand" href="{{url('app_home')}}"><img class="logo" src="../img/Logo.png" alt="Logo"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarColor02">
                 <ul class="navbar-nav m-auto gap-3">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Accueil
+                        <a class="nav-link active" href="{{url('app_home')}}">Accueil
                             <span class="visually-hidden">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"></i>covoiturage</a>
+                        <a class="nav-link" href="{{url('page_carsharing')}}"></i>covoiturage</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">connexion</a>
+                        <a class="nav-link" href="{{url('page_login')}}">connexion</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">déconnexion</a>
+                        <a class="nav-link" href="{{url('page_logout')}}">déconnexion</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Inscription</a>
+                        <a class="nav-link" href="{{url('page_register')}}">Inscription</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" href="{{url('page_contact')}}">Contact</a>
                     </li>                    
                 </ul>
             </div>
