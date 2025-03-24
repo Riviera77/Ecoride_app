@@ -1,0 +1,67 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\CreditsRepository;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: CreditsRepository::class)]
+class Credits
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column]
+    private ?int $solde = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $date_transaction = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $users = null;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getSolde(): ?int
+    {
+        return $this->solde;
+    }
+
+    public function setSolde(int $solde): static
+    {
+        $this->solde = $solde;
+
+        return $this;
+    }
+
+    public function getDateTransaction(): ?\DateTimeInterface
+    {
+        return $this->date_transaction;
+    }
+
+    public function setDateTransaction(\DateTimeInterface $date_transaction): static
+    {
+        $this->date_transaction = $date_transaction;
+
+        return $this;
+    }
+
+    public function getUsers(): ?User
+    {
+        return $this->users;
+    }
+
+    public function setUsers(?User $users): static
+    {
+        $this->users = $users;
+
+        return $this;
+    }
+}

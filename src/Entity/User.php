@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -31,6 +34,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $pseudo = null;
+
+    /**
+     * @var Collection<int, Covoiturage>
+     */
+    #[ORM\ManyToMany(targetEntity: Covoiturage::class, mappedBy: 'user_covoiturage')]
+    private Collection $covoiturages;
+
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private $photo = null;
+
+    public function __construct()
+    {
+        $this->covoiturages = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,5 +125,56 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): static
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Covoiturage>
+     */
+    public function getCovoiturages(): Collection
+    {
+        return $this->covoiturages;
+    }
+
+    public function addCovoiturage(Covoiturage $covoiturage): static
+    {
+        if (!$this->covoiturages->contains($covoiturage)) {
+            $this->covoiturages->add($covoiturage);
+            $covoiturage->addUserCovoiturage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCovoiturage(Covoiturage $covoiturage): static
+    {
+        if ($this->covoiturages->removeElement($covoiturage)) {
+            $covoiturage->removeUserCovoiturage($this);
+        }
+
+        return $this;
+    }
+
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto($photo): static
+    {
+        $this->photo = $photo;
+
+        return $this;
     }
 }
