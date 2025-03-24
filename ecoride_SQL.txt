@@ -1,0 +1,68 @@
+CREATE TABLE utilisateur(
+   Id_utilisateur SERIAL,
+   email VARCHAR(50),
+   pseudo VARCHAR(50),
+   mot_de_passe VARCHAR(50),
+   PRIMARY KEY(Id_utilisateur)
+);
+
+CREATE TABLE credits(
+   Id_credits SERIAL,
+   solde VARCHAR(50),
+   date_transaction TIMESTAMP,
+   Id_utilisateur INTEGER NOT NULL,
+   PRIMARY KEY(Id_credits),
+   FOREIGN KEY(Id_utilisateur) REFERENCES utilisateur(Id_utilisateur)
+);
+
+CREATE TABLE role(
+   Id_role SERIAL,
+   libelle VARCHAR(50),
+   PRIMARY KEY(Id_role)
+);
+
+CREATE TABLE voiture(
+   Id_voiture SERIAL,
+   immatriculation VARCHAR(50),
+   date_premiere_immatriculation VARCHAR(50),
+   modele VARCHAR(50),
+   couleur VARCHAR(50),
+   marque VARCHAR(50),
+   energie BOOLEAN,
+   nb_place INTEGER,
+   preference VARCHAR(50),
+   Id_utilisateur INTEGER NOT NULL,
+   PRIMARY KEY(Id_voiture),
+   FOREIGN KEY(Id_utilisateur) REFERENCES utilisateur(Id_utilisateur)
+);
+
+CREATE TABLE covoiturage(
+   Id_covoiturage SERIAL,
+   adresse_depart VARCHAR(250),
+   adresse_arrivee VARCHAR(250),
+   date_depart DATE,
+   date_arrivee DATE,
+   prix_personne FLOAT,
+   heure_depart TIME,
+   heure_arrivee TIME,
+   Id_voiture INTEGER NOT NULL,
+   PRIMARY KEY(Id_covoiturage),
+   FOREIGN KEY(Id_voiture) REFERENCES voiture(Id_voiture)
+);
+
+CREATE TABLE utilisateur_covoiturage(
+   Id_covoiturage INTEGER,
+   Id_utilisateur INTEGER,
+   statut BOOLEAN,
+   PRIMARY KEY(Id_covoiturage, Id_utilisateur),
+   FOREIGN KEY(Id_covoiturage) REFERENCES covoiturage(Id_covoiturage),
+   FOREIGN KEY(Id_utilisateur) REFERENCES utilisateur(Id_utilisateur)
+);
+
+CREATE TABLE role_utilisateur(
+   Id_utilisateur INTEGER,
+   Id_role INTEGER,
+   PRIMARY KEY(Id_utilisateur, Id_role),
+   FOREIGN KEY(Id_utilisateur) REFERENCES utilisateur(Id_utilisateur),
+   FOREIGN KEY(Id_role) REFERENCES role(Id_role)
+);
